@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arrafi Nur Hafiz — AI & DevOps Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="js/script.js" defer></script>
+</head>
+<body>
+
+<div id="loader">
+  <canvas id="loader-matrix"></canvas>
+  <div class="terminal">
+    <div class="term-header">
+      <span class="term-dots"><span></span><span></span><span></span></span>
+      <span class="term-title">portfolio@arr:~</span>
+      <span></span>
+    </div>
+    <div class="term-body">
+      <pre class="term-ascii" id="term-ascii"></pre>
+      <div class="term-prompt" id="term-prompt"><span class="prompt-symbol">></span> <span id="prompt-text"></span><span class="cursor-blink">_</span></div>
+      <div id="log-lines"></div>
+      <div class="loader-bar-wrap"><div class="loader-bar-fill" id="loader-bar"></div></div>
+      <div class="loader-pct"><span id="loader-pct">0</span>%</div>
+    </div>
+  </div>
+</div>
+
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-trail" id="cursor-trail"></div>
+
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">ARR</a>
+  <div class="nav-links">
+    <a href="#hero" class="active">#about</a>
+    <a href="#skills">#skills</a>
+    <a href="#projects">#projects</a>
+    <a href="#experience">#experience</a>
+    <a href="#contact">#contact</a>
+  </div>
+  <div class="hamburger" id="hamburger" aria-label="menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#hero">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#projects">Projects</a>
+  <a href="#experience">Experience</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<canvas id="particle-canvas"></canvas>
+<div id="scene-overlay"></div>
+<section class="hero" id="hero">
+  <div class="orb orb-1" data-parallax="0.2"></div>
+  <div class="orb orb-2" data-parallax="0.3"></div>
+  <div class="hero-glow-ring"></div>
+  <div class="hero-glow-ring"></div>
+  <div class="hero-glow-ring"></div>
+  <div class="hero-content">
+    <div class="lanyard-scene" id="lanyard-scene">
+      <canvas class="lanyard-canvas" id="lanyard-canvas"></canvas>
+      <div class="lanyard-photo" id="lanyard-photo">
+        <div class="id-card" id="id-card">
+          <div class="id-card-clip"></div>
+          <div class="id-card-header">
+            <span>ID CARD</span>
+            <div class="id-card-dot"></div>
+          </div>
+          <div class="id-card-avatar">
+            <img src="Profil.png" alt="Arrafi Nur Hafiz">
+          </div>
+          <div class="id-card-info">
+            <span class="id-card-name">Arrafi Nur Hafiz</span>
+            <span class="id-card-role">AI & DevOps Engineer</span>
+          </div>
+          <div class="id-card-stripe"></div>
+          <div class="id-card-barcode"></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-text">
+      <div class="hero-badges">
+        <span class="hero-badge"><i class="fa-solid fa-circle" style="color:var(--accent-green);font-size:8px"></i> #OpenToWork</span>
+        <span class="hero-badge"><i class="fa-solid fa-globe"></i> Remote Friendly</span>
+      </div>
+      <h1 class="hero-name glitch" data-text="ARRAFI NUR HAFIZ" id="hero-name">ARRAFI NUR HAFIZ</h1>
+      <p class="hero-sub"><span class="typing-text" id="typing-text"></span><span class="typing-cursor">|</span></p>
+      <p class="hero-bio" id="hero-bio">Mahasiswa Sistem Informasi UTDI dengan fokus pada AI Engineering dan DevOps, berpengalaman membangun solusi teknologi berbasis Docker, Node.js, TypeScript, dan Python melalui 6+ proyek mandiri. Berorientasi pada lingkungan startup dan remote.</p>
+      <button class="lang-toggle" id="lang-toggle"><i class="fa-solid fa-language"></i> ID · <span id="lang-label">Indonesia</span></button>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn btn-primary btn-magnetic"><i class="fa-solid fa-rocket"></i> Lihat Proyek</a>
+        <a href="CV_Arrafi_2Halaman.pdf" download="CV_Arrafi_2Halaman.pdf" class="btn btn-glass btn-magnetic" id="dl-cv"><i class="fa-solid fa-download"></i> Download CV</a>
+      </div>
+      <div class="hero-socials">
+        <a href="https://github.com/ArrafiNurHafiz" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="https://linkedin.com/in/arrafi-nur-hafiz-3a2a802b8" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="mailto:arrafinur3@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://bit.ly/Portofolio-Arrafinur" target="_blank" aria-label="Portfolio"><i class="fa-solid fa-globe"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>SCROLL</span>
+    <i class="fa-solid fa-chevron-down"></i>
+  </div>
+</section>
+
+<div class="depth-particles" aria-hidden="true">
+  <span style="left:10%;animation-duration:25s;width:3px;height:3px;background:var(--accent-violet)"></span>
+  <span style="left:25%;animation-duration:30s;animation-delay:3s;width:2px;height:2px;background:var(--accent-cyan)"></span>
+  <span style="left:40%;animation-duration:22s;animation-delay:5s;width:4px;height:4px;background:var(--accent-pink)"></span>
+  <span style="left:55%;animation-duration:28s;animation-delay:1s;width:2px;height:2px;background:var(--accent-violet)"></span>
+  <span style="left:70%;animation-duration:35s;animation-delay:7s;width:3px;height:3px;background:var(--accent-cyan)"></span>
+  <span style="left:85%;animation-duration:20s;animation-delay:4s;width:2px;height:2px;background:var(--accent-green)"></span>
+  <span style="left:50%;animation-duration:26s;animation-delay:2s;width:3px;height:3px;background:var(--accent-pink)"></span>
+  <span style="left:15%;animation-duration:32s;animation-delay:6s;width:2px;height:2px;background:var(--accent-green)"></span>
+  <span style="left:90%;animation-duration:24s;animation-delay:8s;width:4px;height:4px;background:var(--accent-violet)"></span>
+  <span style="left:35%;animation-duration:27s;animation-delay:0s;width:2px;height:2px;background:var(--accent-cyan)"></span>
+</div>
+<section id="skills" class="section-divider" style="position:relative">
+  <div class="section-3d-shape shape-skills"></div>
+  <h2 class="section-title reveal-blur"><span class="accent">#</span> Skills & Tech Stack</h2>
+  <div class="skills-grid">
+    <div class="skill-card tilt-card reveal-skills" data-category="ai">
+      <div class="card-glare"></div>
+      <div class="skill-category"><i class="fa-solid fa-brain"></i> AI & ML</div>
+      <div class="skill-tags">
+        <span class="skill-badge">OpenAI API<span class="tooltip">OpenAI API</span></span>
+        <span class="skill-badge">Anthropic API<span class="tooltip">Anthropic Claude API</span></span>
+        <span class="skill-badge">Gemini API<span class="tooltip">Google Gemini API</span></span>
+        <span class="skill-badge">LangChain<span class="tooltip">LangChain Framework</span></span>
+        <span class="skill-badge">Ollama<span class="tooltip">Ollama (Llama models)</span></span>
+        <span class="skill-badge">Prompt Engineering<span class="tooltip">Prompt Engineering</span></span>
+        <span class="skill-badge">Hugging Face<span class="tooltip">Hugging Face</span></span>
+      </div>
+    </div>
+    <div class="skill-card tilt-card reveal-skills" data-category="devops">
+      <div class="card-glare"></div>
+      <div class="skill-category"><i class="fa-solid fa-gear"></i> DevOps & Infra</div>
+      <div class="skill-tags">
+        <span class="skill-badge">Docker<span class="tooltip">Docker</span></span>
+        <span class="skill-badge">Linux Admin<span class="tooltip">Linux Administration</span></span>
+        <span class="skill-badge">Git & GitHub<span class="tooltip">Git & GitHub</span></span>
+        <span class="skill-badge">GitHub Actions<span class="tooltip">GitHub Actions CI/CD</span></span>
+        <span class="skill-badge">AWS<span class="tooltip">AWS EC2, S3, Lambda</span></span>
+        <span class="skill-badge">GCP<span class="tooltip">Google Cloud Platform</span></span>
+        <span class="skill-badge">Azure<span class="tooltip">Microsoft Azure</span></span>
+        <span class="skill-badge">Shell Scripting<span class="tooltip">Bash/Shell Scripting</span></span>
+        <span class="skill-badge">Infra Monitoring<span class="tooltip">Infrastructure Monitoring</span></span>
+      </div>
+    </div>
+    <div class="skill-card tilt-card reveal-skills" data-category="dev">
+      <div class="card-glare"></div>
+      <div class="skill-category"><i class="fa-solid fa-code"></i> Programming & Dev</div>
+      <div class="skill-tags">
+        <span class="skill-badge">Python<span class="tooltip">Python</span></span>
+        <span class="skill-badge">TypeScript<span class="tooltip">TypeScript</span></span>
+        <span class="skill-badge">React<span class="tooltip">React.js</span></span>
+        <span class="skill-badge">Node.js<span class="tooltip">Node.js</span></span>
+        <span class="skill-badge">PHP<span class="tooltip">PHP</span></span>
+        <span class="skill-badge">MySQL<span class="tooltip">MySQL</span></span>
+        <span class="skill-badge">JavaScript<span class="tooltip">JavaScript</span></span>
+        <span class="skill-badge">HTML5<span class="tooltip">HTML5</span></span>
+        <span class="skill-badge">CSS3<span class="tooltip">CSS3</span></span>
+        <span class="skill-badge">REST API<span class="tooltip">REST API</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="stats-row reveal-blur">
+    <div class="stat-item"><div class="stat-num" data-count="6">0</div><div class="stat-label">+ Projects</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="3">0</div><div class="stat-label">Cloud Platforms</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="10">0</div><div class="stat-label">+ Tech Stack</div></div>
+  </div>
+</section>
+
+<section id="projects" class="section-divider" style="position:relative">
+  <div class="section-3d-shape shape-projects"></div>
+  <h2 class="section-title reveal-blur"><span class="accent">#</span> Projects</h2>
+  <div class="projects-grid">
+    <a href="https://github.com/ArrafiNurHafiz/simaws-smk" target="_blank" rel="noopener noreferrer" class="project-card tilt-card reveal-projects">
+      <div class="card-glare"></div>
+      <div class="project-num">01</div>
+      <div class="project-title">SIMAWS-SMK <span class="project-featured">Featured</span></div>
+      <div class="project-desc">Platform simulasi AWS lokal untuk SMK, eliminasi biaya cloud ~100%</div>
+      <div class="project-stacks">
+        <span class="project-stack stack-devops">Docker</span>
+        <span class="project-stack stack-web">Node.js</span>
+        <span class="project-stack stack-web">TypeScript/React</span>
+      </div>
+    </a>
+    <a href="https://github.com/ArrafiNurHafiz/Multi-node-Monitoring-Dashboard" target="_blank" rel="noopener noreferrer" class="project-card tilt-card reveal-projects">
+      <div class="card-glare"></div>
+      <div class="project-num">02</div>
+      <div class="project-title">Multi-node Monitor</div>
+      <div class="project-desc">Dashboard monitor node sistem terdistribusi, visualisasi transfer file antar node</div>
+      <div class="project-stacks">
+        <span class="project-stack stack-ai">Python</span>
+      </div>
+    </a>
+    <a href="https://github.com/ArrafiNurHafiz/scanner-vulnerability" target="_blank" rel="noopener noreferrer" class="project-card tilt-card reveal-projects">
+      <div class="card-glare"></div>
+      <div class="project-num">03</div>
+      <div class="project-title">Vulnerability Scanner</div>
+      <div class="project-desc">Full-spectrum web vuln scanner, diuji pada target real, offensive security</div>
+      <div class="project-stacks">
+        <span class="project-stack stack-ai">Python</span>
+      </div>
+    </a>
+    <a href="https://github.com/ArrafiNurHafiz/Toko-Batik-Online" target="_blank" rel="noopener noreferrer" class="project-card tilt-card reveal-projects">
+      <div class="card-glare"></div>
+      <div class="project-num">04</div>
+      <div class="project-title">Toko Batik Online</div>
+      <div class="project-desc">E-commerce batik + payment gateway simulation</div>
+      <div class="project-stacks">
+        <span class="project-stack stack-web">PHP</span>
+        <span class="project-stack stack-web">MySQL</span>
+      </div>
+    </a>
+    <a href="https://github.com/ArrafiNurHafiz/youtube-manager" target="_blank" rel="noopener noreferrer" class="project-card tilt-card reveal-projects">
+      <div class="card-glare"></div>
+      <div class="project-num">05</div>
+      <div class="project-title">YouTube Manager</div>
+      <div class="project-desc">Manajemen multi-channel YouTube terpusat</div>
+      <div class="project-stacks">
+        <span class="project-stack stack-web">JavaScript</span>
+      </div>
+    </a>
+    <a href="https://github.com/ArrafiNurHafiz/Aplikasi-Data-Warga-Rt" target="_blank" rel="noopener noreferrer" class="project-card tilt-card reveal-projects">
+      <div class="card-glare"></div>
+      <div class="project-num">06</div>
+      <div class="project-title">Aplikasi Data Warga RT</div>
+      <div class="project-desc">Sistem CRUD pengelolaan data warga berbasis web</div>
+      <div class="project-stacks">
+        <span class="project-stack stack-web">PHP</span>
+        <span class="project-stack stack-web">MySQL</span>
+      </div>
+    </a>
+    <a href="https://github.com/ArrafiNurHafiz/it-asset-management" target="_blank" rel="noopener noreferrer" class="project-card tilt-card reveal-projects">
+      <div class="card-glare"></div>
+      <div class="project-num">07</div>
+      <div class="project-title">IT Asset Management</div>
+      <div class="project-desc">Manajemen aset IT, inventaris perangkat, tracking siklus hidup hardware & software</div>
+      <div class="project-stacks">
+        <span class="project-stack stack-web">PHP</span>
+        <span class="project-stack stack-web">MySQL</span>
+        <span class="project-stack stack-web">Bootstrap</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="experience" class="section-divider" style="position:relative">
+  <div class="section-3d-shape shape-experience"></div>
+  <h2 class="section-title reveal-blur"><span class="accent">#</span> Experience & Education</h2>
+  <div class="timeline">
+    <div class="timeline-item reveal-left reveal-timeline">
+      <div class="timeline-icon"><i class="fa-solid fa-flask"></i></div>
+      <div class="timeline-content">
+        <div class="timeline-date">2024 — 2025</div>
+        <div class="timeline-title">Researcher & Developer</div>
+        <div class="timeline-sub">Penelitian Dosen — UTDI</div>
+      </div>
+    </div>
+    <div class="timeline-item reveal-left reveal-timeline">
+      <div class="timeline-icon"><i class="fa-solid fa-laptop-code"></i></div>
+      <div class="timeline-content">
+        <div class="timeline-date">2024 — Sekarang</div>
+        <div class="timeline-title">Independent Project Developer</div>
+        <div class="timeline-sub">Self-directed projects across AI, DevOps, and Web</div>
+      </div>
+    </div>
+    <div class="timeline-item reveal-left reveal-timeline">
+      <div class="timeline-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div class="timeline-content">
+        <div class="timeline-date">2024 — Sekarang</div>
+        <div class="timeline-title">S1 Sistem Informasi</div>
+        <div class="timeline-sub">Universitas Teknologi Digital Indonesia (UTDI)</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:clamp(20px,2.5vw,28px);margin-top:48px;margin-bottom:24px;" class="reveal"><i class="fa-solid fa-certificate" style="color:var(--accent-cyan);margin-right:10px"></i> Certifications</h3>
+  <div class="cert-grid">
+    <div class="cert-item reveal reveal-cert"><div class="cert-icon"><i class="fa-solid fa-shield-halved"></i></div><div class="cert-title">Cyber Security Course Level Basic</div><div class="cert-org">ITBOX.id · Apr 2026</div></div>
+    <div class="cert-item reveal reveal-cert"><div class="cert-icon"><i class="fa-solid fa-chart-simple"></i></div><div class="cert-title">Belajar Dasar Data Science</div><div class="cert-org">Dicoding · Mei 2026</div></div>
+    <div class="cert-item reveal reveal-cert"><div class="cert-icon"><i class="fa-solid fa-coins"></i></div><div class="cert-title">Introduction to Financial Literacy</div><div class="cert-org">Dicoding · Mei 2026</div></div>
+    <div class="cert-item reveal reveal-cert"><div class="cert-icon"><i class="fa-solid fa-lock"></i></div><div class="cert-title">Broken Access Control Sharing Session</div><div class="cert-org">Merdeka Siber · Jan 2026</div></div>
+    <div class="cert-item reveal reveal-cert"><div class="cert-icon"><i class="fa-solid fa-cloud"></i></div><div class="cert-title">AWS Cloud Campus Class</div><div class="cert-org">AWS × Metrodata × UTDI · Okt 2025</div></div>
+  </div>
+
+  <div class="award-card reveal reveal-award" style="margin-top:32px;">
+    <div class="award-icon"><i class="fa-solid fa-trophy" style="color:var(--accent-cyan);font-size:28px"></i></div>
+    <div class="award-title">Top 100 dari 314 Peserta Internasional</div>
+    <div class="award-desc">Indonesia Singapore Essay Competition (ISEAC) — Juni 2026<br>Youth Contribution to Strengthening Indonesia–Singapore Diplomatic Relations</div>
+  </div>
+</section>
+
+<section id="contact" class="section-divider" style="position:relative">
+  <div class="section-3d-shape shape-contact"></div>
+  <h2 class="section-title reveal-blur"><span class="accent">#</span> Contact</h2>
+  <div class="contact-grid">
+    <div class="contact-info reveal-contact-left">
+      <div class="contact-item"><i class="fa-solid fa-envelope"></i> <a href="mailto:arrafinur3@gmail.com">arrafinur3@gmail.com</a></div>
+      <div class="contact-item"><i class="fa-solid fa-phone"></i> <span>+62 859-2727-4835</span></div>
+      <div class="contact-item"><i class="fa-brands fa-github"></i> <a href="https://github.com/ArrafiNurHafiz" target="_blank">github.com/ArrafiNurHafiz</a></div>
+      <div class="contact-item"><i class="fa-brands fa-linkedin-in"></i> <a href="https://linkedin.com/in/arrafi-nur-hafiz-3a2a802b8" target="_blank">linkedin.com/in/arrafi-nur-hafiz</a></div>
+      <div class="contact-item"><i class="fa-solid fa-globe"></i> <a href="https://bit.ly/Portofolio-Arrafinur" target="_blank">bit.ly/Portofolio-Arrafinur</a></div>
+    </div>
+    <form class="contact-form reveal-contact-right" id="contact-form">
+      <div class="form-group">
+        <input type="text" placeholder="Nama / Name" required>
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <textarea placeholder="Pesan / Message" required></textarea>
+      </div>
+      <button type="submit" class="btn-submit"><i class="fa-solid fa-paper-plane"></i> Kirim Pesan</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span>> Built with &hearts; & passion by Arrafi Nur Hafiz &copy; 2026</span>
+</footer>
+
+</body>
+</html>
