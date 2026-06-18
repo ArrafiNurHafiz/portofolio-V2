@@ -1,6 +1,10 @@
 (function(){
 'use strict';
 
+let isMobile, isSmallScreen;
+isMobile = window.matchMedia('(pointer: coarse)').matches;
+isSmallScreen = window.innerWidth < 768;
+
 // LOADER
 const loader = document.getElementById('loader');
 const bar = document.getElementById('loader-bar');
@@ -169,7 +173,8 @@ const sectionOrder = ['hero', 'skills', 'projects', 'experience', 'contact'];
 function initParticles() {
   const canvas = document.getElementById('particle-canvas');
   if (!canvas) return;
-  const isMobile = window.matchMedia('(pointer: coarse)').matches;
+  isMobile = window.matchMedia('(pointer: coarse)').matches;
+  isSmallScreen = window.innerWidth < 768;
 
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
@@ -537,6 +542,9 @@ document.querySelectorAll('p, h1, h2, h3, span').forEach(el => {
   el.addEventListener('mouseleave', () => cursorDot.classList.remove('text-hover'));
 });
 
+// HIDE SCROLL INDICATOR ON FIRST SCROLL
+let scrollHidden = false;
+
 // NAVBAR
 let lastScroll = 0;
 const navbar = document.getElementById('navbar');
@@ -546,6 +554,10 @@ window.addEventListener('scroll', () => {
   else navbar.classList.remove('hidden-nav');
   lastScroll = curr;
   updateActiveNav();
+  if (!scrollHidden && curr > 200) {
+    const si = document.querySelector('.scroll-indicator');
+    if (si) { si.style.opacity = '0'; si.style.transition = 'opacity 0.5s ease'; scrollHidden = true; }
+  }
 }, { passive: true });
 
 function updateActiveNav() {
@@ -599,6 +611,7 @@ function initReveal() {
 
 // 5D — MAGNETIC BUTTONS
 function initMagnetic() {
+  if (isMobile) return;
   document.querySelectorAll('.btn-magnetic').forEach(btn => {
     btn.addEventListener('mousemove', e => {
       const r = btn.getBoundingClientRect();
@@ -637,6 +650,7 @@ function initScrollColors() {
 
 // 3D TILT CARDS
 function initTilt() {
+  if (isMobile) return;
   const cards = document.querySelectorAll('.tilt-card');
   cards.forEach(card => {
     const glare = card.querySelector('.card-glare');
@@ -771,9 +785,9 @@ window.addEventListener('scroll', () => {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     p.ax = p.w / 2; p.ay = 30;
     if (card) cardHalf = card.offsetHeight / 2 || 55;
-    p.restDist = p.h * 0.48;
+    p.restDist = Math.min(p.h * 0.44, p.h - cardHalf - p.ay - 10);
     if (!p.drag) {
-      p.x = p.ax; p.y = p.h - cardHalf - 8;
+      p.x = p.ax; p.y = Math.max(p.h * 0.4, p.h - cardHalf - 8);
       p.vx = 0; p.vy = 0; p.rot = 0; p.rotV = 0;
     }
   }
@@ -814,7 +828,7 @@ window.addEventListener('scroll', () => {
       p.y += p.vy * dt;
     }
 
-    const m = 80;
+    const m = Math.min(80, p.w * 0.3);
     p.x = Math.max(m, Math.min(p.w - m, p.x));
     if (p.y > p.h - cardHalf) { p.y = p.h - cardHalf; p.vy *= -0.5; p.rotV *= -0.15; }
     if (p.y < p.ay + 12) { p.y = p.ay + 12; p.vy *= -0.5; p.rotV *= -0.15; }
@@ -866,11 +880,12 @@ window.addEventListener('scroll', () => {
     ctx.strokeStyle = 'rgba(168,85,247,0.08)'; ctx.lineWidth = 0.8; ctx.stroke();
 
     // Neck loop (extends upward behind navbar)
+    const neckDr = Math.min(120, p.w * 0.7);
     ctx.beginPath();
-    ctx.arc(p.ax, p.ay - 80, 90, -Math.PI * 0.55, Math.PI * 0.55);
+    ctx.arc(p.ax, p.ay - neckDr * 0.7, neckDr, -Math.PI * 0.55, Math.PI * 0.55);
     ctx.strokeStyle = 'rgba(124,58,237,0.15)'; ctx.lineWidth = 2.5; ctx.stroke();
     ctx.beginPath();
-    ctx.arc(p.ax, p.ay - 80, 90, -Math.PI * 0.55, Math.PI * 0.55);
+    ctx.arc(p.ax, p.ay - neckDr * 0.7, neckDr, -Math.PI * 0.55, Math.PI * 0.55);
     ctx.strokeStyle = 'rgba(6,182,212,0.06)'; ctx.lineWidth = 1; ctx.stroke();
 
     // Anchor clip hook
@@ -919,8 +934,9 @@ window.addEventListener('scroll', () => {
   document.addEventListener('touchmove', move, { passive: false });
   document.addEventListener('touchend', end);
 
-  // Hero content tilt
+  // Hero content tilt (disabled on touch)
   (function(){
+    if (isMobile) return;
     const hero = document.querySelector('.hero');
     if (!hero) return;
     hero.addEventListener('mousemove', e => {
@@ -937,6 +953,30 @@ window.addEventListener('scroll', () => {
   function loop() { phys(); requestAnimationFrame(loop); }
   loop();
 })();
+
+// ORIENTATION CHANGE — reflow adjustments
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.hero-glow-ring, .lanyard-scene, .id-card').forEach(el => {
+      el.style.transition = 'all 0.3s ease';
+    });
+  }, 300);
+});
+
+// Resize observer for responsive 3D
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    onResize();
+    const w = window.innerWidth;
+    if (w < 768 || w >= 768) {
+      document.querySelectorAll('[data-parallax]').forEach(el => {
+        el.removeAttribute('style');
+      });
+    }
+  }, 200);
+});
 
 // DL CV
 document.getElementById('dl-cv')?.addEventListener('click', e => {

@@ -799,21 +799,160 @@ footer {
   to { opacity: 1; transform: translateY(0) rotateX(0); }
 }
 
-/* RESPONSIVE */
+/* SAFE AREAS */
+body {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+nav {
+  padding-top: max(0px, env(safe-area-inset-top, 0px));
+}
+
+/* TOUCH DEVICES */
+@media (pointer: coarse) {
+  .cursor-dot, .cursor-trail { display: none; }
+  .hamburger { padding: 12px; }
+  .hamburger span { width: 28px; height: 3px; }
+  .hero-socials a { width: 48px; height: 48px; font-size: 20px; }
+  .btn { padding: 14px 36px; }
+  .form-group input, .form-group textarea { padding: 16px 20px; font-size: 16px; }
+  .nav-links a { padding: 12px 4px; }
+  .skill-badge { padding: 8px 16px; font-size: 12px; }
+  .project-stack { padding: 5px 12px; }
+  .contact-item { padding: 16px 20px; }
+  .btn-submit { padding: 16px 36px; }
+  .lanyard-photo { touch-action: none; }
+}
+
+@media (hover: none) {
+  .skill-badge:hover .tooltip { opacity: 0; visibility: hidden; }
+  .skill-badge .tooltip { display: none; }
+  .cursor-dot, .cursor-trail { display: none; }
+  .animated-border { display: none; }
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .hero-content { gap: clamp(16px, 3vw, 32px); }
+  .lanyard-scene { width: clamp(140px, 28vw, 200px); height: 400px; margin-top: clamp(-80px, -12vw, -60px); }
+  .id-card { width: clamp(120px, 22vw, 180px); }
+  .id-card-avatar img { width: clamp(85px, 18vw, 140px); height: clamp(110px, 24vw, 180px); }
+  .hero-name { font-size: clamp(28px, 5vw, 56px); }
+  .hero-glow-ring { width: 400px; height: 400px; }
+  .hero-glow-ring:nth-child(2) { width: 280px; height: 280px; }
+  .projects-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .stats-row { grid-template-columns: repeat(3, 1fr); }
+  .cert-grid { grid-template-columns: repeat(2, 1fr); }
+  .section-title { font-size: clamp(24px, 3.5vw, 36px); }
+  #particle-canvas { opacity: 0.6; }
+  .orb-1 { width: 250px; height: 250px; }
+  .orb-2 { width: 200px; height: 200px; }
+  .orb-3 { width: 180px; height: 180px; }
+  .depth-particles span { opacity: 0.08; }
+}
+
+/* MOBILE */
 @media (max-width: 768px) {
-  .hero-content { flex-direction: column; text-align: center; }
+  section { padding: clamp(40px, 6vw, 60px) clamp(12px, 3vw, 24px); }
+  .hero { min-height: 100svh; padding-top: 72px; }
+  .hero-content { flex-direction: column; text-align: center; gap: 8px; }
   .hero-text { text-align: center; }
-  .lanyard-scene { height: 270px; width: clamp(120px, 38vw, 180px); }
-  .hero-badges, .hero-ctas, .hero-socials { justify-content: center !important; }
+  .lanyard-scene { height: 300px; width: clamp(100px, 32vw, 160px); margin-top: clamp(-80px, -10vw, -40px); }
+  .id-card { width: clamp(100px, 28vw, 150px); }
+  .id-card-header { padding: 6px 12px; font-size: 8px; }
+  .id-card-avatar { padding: 10px 8px 4px; }
+  .id-card-avatar img { width: clamp(75px, 20vw, 110px); height: clamp(95px, 26vw, 145px); }
+  .id-card-info { padding: 0 10px 12px; }
+  .id-card-name { font-size: clamp(12px, 3.5vw, 16px); }
+  .id-card-role { font-size: clamp(9px, 2.5vw, 12px); }
+  .id-card-barcode { height: 16px; margin: 8px 12px 12px; }
+  .id-card-clip { width: 24px; height: 12px; }
+  .hero-badges { justify-content: center; }
+  .hero-badge { font-size: 10px; padding: 4px 12px; }
+  .hero-name { font-size: clamp(24px, 8vw, 42px); margin-bottom: 8px; }
+  .hero-sub { font-size: clamp(14px, 4vw, 18px); margin-bottom: 8px; }
+  .hero-bio { font-size: clamp(13px, 3.5vw, 15px); max-width: 100%; margin-bottom: 16px; }
+  .hero-ctas { justify-content: center; gap: 12px; }
+  .btn { padding: 10px 24px; font-size: 12px; }
+  .hero-socials { justify-content: center; gap: 12px; }
+  .hero-socials a { width: 40px; height: 40px; font-size: 16px; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
-  .contact-grid { grid-template-columns: 1fr; }
+  .scroll-indicator { bottom: 16px; }
+  .hero-glow-ring { width: 280px; height: 280px; }
+  .hero-glow-ring:nth-child(2) { width: 200px; height: 200px; }
+  .hero-glow-ring:nth-child(3) { width: 120px; height: 120px; }
+  .orb-1 { width: 180px; height: 180px; }
+  .orb-2 { width: 150px; height: 150px; }
+  .orb-3 { width: 120px; height: 120px; }
+
+  .skills-grid { grid-template-columns: 1fr; gap: 16px; }
+  .skill-card { padding: clamp(20px, 4vw, 28px); }
+  .skill-category { font-size: 16px; }
+  .project-title { font-size: clamp(16px, 4vw, 19px); }
+
   .projects-grid { grid-template-columns: 1fr; }
-  .stats-row { grid-template-columns: 1fr; }
-  .cert-grid { grid-template-columns: 1fr; }
-  .timeline::before { left: 18px; }
-  .timeline-icon { width: 36px; height: 36px; min-width: 36px; font-size: 14px; }
+  .project-card { padding: clamp(16px, 3vw, 20px); }
+
+  .contact-grid { grid-template-columns: 1fr; gap: 20px; }
+  .contact-item { padding: 12px 14px; }
+  .contact-item a, .contact-item span { font-size: 13px; overflow: hidden; text-overflow: ellipsis; }
+
+  .stats-row { grid-template-columns: 1fr; gap: 12px; }
+  .stat-item { padding: 14px; }
+  .stat-num { font-size: clamp(24px, 8vw, 32px); }
+
+  .cert-grid { grid-template-columns: 1fr; gap: 12px; }
+
+  .timeline::before { left: 16px; }
+  .timeline-item { gap: 12px; margin-bottom: 24px; }
+  .timeline-icon { width: 32px; height: 32px; min-width: 32px; font-size: 12px; }
+  .timeline-content { padding: clamp(12px, 3vw, 18px); }
+  .timeline-title { font-size: 15px; }
+  .timeline-sub { font-size: 13px; }
+
+  .section-title { font-size: clamp(22px, 6vw, 30px); margin-bottom: clamp(20px, 4vw, 32px); }
+  .section-3d-shape { opacity: 0.03; }
+
+  .mobile-menu a { font-size: 24px; }
+  .mobile-menu { gap: 24px; }
+
   .cursor-dot, .cursor-trail { display: none; }
+  .term-body { padding: clamp(14px, 4vw, 24px); }
+  #loader .terminal { width: min(94vw, 580px); }
+
+  footer { padding: 24px 16px; font-size: 12px; }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+  section { padding: clamp(28px, 5vw, 40px) clamp(10px, 2.5vw, 16px); }
+  .hero { padding-top: 64px; }
+  .lanyard-scene { height: 260px; width: clamp(100px, 30vw, 140px); margin-top: clamp(-60px, -8vw, -20px); }
+  .id-card { width: clamp(85px, 25vw, 120px); }
+  .id-card-avatar { padding: 8px 6px 4px; }
+  .id-card-avatar img { width: clamp(60px, 18vw, 90px); height: clamp(80px, 24vw, 120px); }
+  .id-card-name { font-size: clamp(10px, 3vw, 13px); }
+  .id-card-role { font-size: 8px; }
+  .hero-name { font-size: clamp(20px, 7vw, 32px); }
+  .hero-sub { font-size: clamp(12px, 3.5vw, 15px); }
+  .hero-bio { font-size: clamp(12px, 3.2vw, 14px); }
+  .hero-badge { font-size: 9px; padding: 3px 10px; }
+  .btn { padding: 8px 18px; font-size: 11px; }
+  .hero-ctas { gap: 8px; }
+  .hero-socials a { width: 36px; height: 36px; font-size: 14px; }
+  .mobile-menu a { font-size: 20px; }
+  .mobile-menu { gap: 20px; }
+  .skills-grid { gap: 12px; }
+  .projects-grid { gap: 12px; }
+  .contact-grid { gap: 16px; }
+  .contact-item { padding: 10px 12px; gap: 10px; }
+  .contact-item a, .contact-item span { font-size: 12px; }
+  .form-group input, .form-group textarea { padding: 12px 14px; font-size: 14px; }
+  .btn-submit { padding: 12px 24px; font-size: 12px; }
+  .project-num { font-size: 10px; }
+  .project-desc { font-size: 13px; }
+  .project-stack { font-size: 9px; padding: 2px 8px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
