@@ -1002,4 +1002,22 @@ const heroName = document.getElementById('hero-name');
 heroName.addEventListener('mouseenter', () => heroName.classList.add('glitch'));
 heroName.addEventListener('mouseleave', () => heroName.classList.remove('glitch'));
 
+// CERT MODAL
+window.openCert = function(src, title, org) {
+  const modal = document.getElementById('cert-modal');
+  document.getElementById('cert-modal-img').src = src;
+  document.getElementById('cert-modal-title').textContent = title;
+  document.getElementById('cert-modal-org').textContent = org;
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+};
+window.closeCert = function() {
+  const modal = document.getElementById('cert-modal');
+  modal.classList.remove('show');
+  document.body.style.overflow = '';
+};
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') window.closeCert();
+});
+
 })();
